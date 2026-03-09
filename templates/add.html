@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Add Asset</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+
+    <div class="container">
+
+        <a class="navbar-brand" href="/admin">Asset System</a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="menu">
+
+            <ul class="navbar-nav me-auto">
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin">Dashboard</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin">Asset Management</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/asset_types">Asset Types</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/users">User Management</a>
+                </li>
+
+            </ul>
+
+            <a href="/admin/add" class="btn btn-success">+ Add Asset</a>
+
+        </div>
+
+    </div>
+
+</nav>
+
+
+<!-- CONTENT -->
+<div class="container mt-5">
+
+    <h2>Add Asset</h2>
+
+    <form action="/admin/insert" method="POST" enctype="multipart/form-data">
+
+        <!-- Asset Code -->
+        <input name="asset_code" class="form-control mb-2" placeholder="Asset Code" required>
+
+        <!-- Asset Name -->
+        <input name="asset_name" class="form-control mb-2" placeholder="Asset Name" required>
+
+        <!-- Brand -->
+        <input name="brand" class="form-control mb-2" placeholder="Brand">
+
+        <!-- Location -->
+        <input name="location" class="form-control mb-2" placeholder="Location">
+
+        <!-- ประเภทครุภัณฑ์ -->
+        <label class="form-label">ประเภทครุภัณฑ์</label>
+
+        <select name="type_id" class="form-control mb-3" required>
+
+            <option value="">-- เลือกประเภทครุภัณฑ์ --</option>
+
+            {% for t in types %}
+            <option value="{{t.type_id}}">{{t.type_name}}</option>
+            {% endfor %}
+
+        </select>
+
+        <!-- Status -->
+        <label class="form-label">สถานะ</label>
+
+        <select name="status" class="form-control mb-3">
+
+            <option value="ปกติ">ปกติ</option>
+            <option value="แจ้งซ่อม">แจ้งซ่อม</option>
+            <option value="จำหน่ายออก">จำหน่ายออก</option>
+
+        </select>
+
+        <!-- Upload Image -->
+        <label class="form-label">รูปภาพครุภัณฑ์</label>
+
+        <input type="file" name="image" class="form-control mb-3" accept="image/*">
+
+        <button class="btn btn-success">Save</button>
+
+        <a href="/admin" class="btn btn-secondary">Back</a>
+
+    </form>
+
+</div>
+
+</body>
+</html>

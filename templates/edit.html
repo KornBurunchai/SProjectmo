@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Edit Asset</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body class="container mt-5">
+
+    <h2>Edit Asset</h2>
+
+    <form action="/admin/update/{{asset.asset_id}}" method="POST" enctype="multipart/form-data">
+
+        <!-- Asset Code -->
+        <label>Asset Code</label>
+        <input name="asset_code" value="{{asset.asset_code}}" class="form-control mb-2">
+
+        <!-- Asset Name -->
+        <label>Asset Name</label>
+        <input name="asset_name" value="{{asset.asset_name}}" class="form-control mb-2">
+
+        <!-- Brand -->
+        <label>Brand</label>
+        <input name="brand" value="{{asset.brand}}" class="form-control mb-2">
+
+        <!-- Location -->
+        <label>Location</label>
+        <input name="location" value="{{asset.location}}" class="form-control mb-2">
+
+        <!-- Type -->
+        <label>ประเภทครุภัณฑ์</label>
+        <select name="type_id" class="form-control mb-2">
+
+            {% for t in types %}
+
+            <option value="{{t.type_id}}" {% if asset.type_id==t.type_id %} selected {% endif %}>
+                {{t.type_name}}
+            </option>
+
+            {% endfor %}
+
+        </select>
+
+        <!-- Status -->
+        <label>สถานะ</label>
+        <select name="status" class="form-control mb-3">
+
+            <option value="ปกติ" {% if asset.status=='ปกติ' %}selected{% endif %}>ปกติ</option>
+            <option value="แจ้งซ่อม" {% if asset.status=='แจ้งซ่อม' %}selected{% endif %}>แจ้งซ่อม</option>
+            <option value="จำหน่ายออก" {% if asset.status=='จำหน่ายออก' %}selected{% endif %}>จำหน่ายออก</option>
+
+        </select>
+
+        <!-- Current Image -->
+        {% if asset.image %}
+        <p>รูปปัจจุบัน</p>
+        <img src="/uploads/{{asset.image}}" width="120" class="mb-3">
+        {% endif %}
+
+        <!-- Upload new image -->
+        <label>เปลี่ยนรูปภาพ</label>
+        <input type="file" name="image" class="form-control mb-3">
+
+        <button class="btn btn-warning">Update</button>
+        <a href="/admin" class="btn btn-secondary">Back</a>
+
+    </form>
+
+</body>
+
+</html>
