@@ -684,7 +684,13 @@ def register():
 @app.route("/login", methods=["POST"])
 def login():
 
-    data = request.json
+    data = request.get_json()
+
+    if not data:
+        return jsonify({"error":"no json received"}),400
+
+    username = data.get("username")
+    password = data.get("password")
 
     conn = mysql.connect()
     cursor = conn.cursor(pymysql.cursors.DictCursor)
@@ -693,7 +699,7 @@ def login():
         SELECT user_id,first_name,last_name,email,username,role
         FROM users
         WHERE username=%s AND password=%s
-    """,(data["username"], data["password"]))
+    """,(username, password))
 
     user = cursor.fetchone()
 
@@ -704,7 +710,6 @@ def login():
         return jsonify({"status":"success","user":user})
     else:
         return jsonify({"status":"error"}),401
-
 
 # ================= START SERVER =================
 if __name__ == "__main__":
